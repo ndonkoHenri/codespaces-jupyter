@@ -73,4 +73,26 @@ def main(page: ft.Page):
         theme_icon_button.selected = not theme_icon_button.selected  # changes the icon
         page.update()
 
+    def shorten(e: ft.ControlEvent):
+        """Grabs the URL in the textfield, and displays shortened versions of it."""
+
+        user_link = text_field.value  # retrieve the content of the textfield
+
+        if user_link:  # if the textfield is not empty
+            # if the entered text in the textfield is not a valid URl, the program may break,
+            # hence the need to catch that in a try-except
+            page.splash.visible = True
+            page.update()
+            page.add(ft.Text(f"Long URL: {text_field.value}", italic=False, weight=ft.FontWeight.BOLD))
+            for s in [shortener.tinyurl, shortener.clckru, shortener.dagd, shortener.isgd, shortener.chilpit, shortener.osdb]:
+                try:
+                    page.add(ShortLinkRow(s.short(text_field.value)))
+                except Exception as exception:
+                    print(exception)
+                    # inform the user that an error has occurred
+                    page.splash.visible = False
+                    page.update()
+        else:  # inform the user if the textfield is empty (no text)
+            e.page.show_snack_bar(ft.SnackBar(ft.Text("Please enter a URL in the field!")))
+
 
