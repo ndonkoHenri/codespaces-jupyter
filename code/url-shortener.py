@@ -45,4 +45,14 @@ class ShortLinkRow(ft.Row):
         self.page.show_snack_bar(ft.SnackBar(ft.Text("Link copied to clipboard!")))
 
 
+def main(page: ft.Page):
+    page.title = "URL Shortener"  # title of application/page
+    page.theme_mode = "light"  # by default, page.theme_mode=None
+    page.splash = ft.ProgressBar(visible=False)
+    page.horizontal_alignment = "center"  # center our page's content
+    # set the width and height of the window on desktop
+    page.window_width = 522
+    page.window_height = 620
+    page.scroll = "hidden"
+
 
