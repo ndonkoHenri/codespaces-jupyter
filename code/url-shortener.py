@@ -55,4 +55,22 @@ def main(page: ft.Page):
     page.window_height = 620
     page.scroll = "hidden"
 
+    # use the custom fonts in the assets folder
+    page.fonts = {
+        "sf-simple": "/fonts/San-Francisco/SFUIDisplay-Light.ttf",
+        "sf-bold": "/fonts/San-Francisco/SFUIDisplay-Bold.ttf"
+    }
+    page.theme = ft.Theme(font_family="sf-simple")
+
+    def change_theme(e):
+        """
+        Changes the app's theme_mode, from dark to light or light to dark. A splash(progress bar) is also shown.
+
+        :param e: The event that triggered the function
+        :type e: ControlEvent
+        """
+        page.theme_mode = "light" if page.theme_mode == "dark" else "dark"  # changes the page's theme_mode
+        theme_icon_button.selected = not theme_icon_button.selected  # changes the icon
+        page.update()
+
 
