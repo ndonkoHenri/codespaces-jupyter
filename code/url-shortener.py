@@ -95,4 +95,48 @@ def main(page: ft.Page):
         else:  # inform the user if the textfield is empty (no text)
             e.page.show_snack_bar(ft.SnackBar(ft.Text("Please enter a URL in the field!")))
 
+    theme_icon_button = ft.IconButton(
+        ft.icons.DARK_MODE,
+        selected=False,
+        selected_icon=ft.icons.LIGHT_MODE,
+        icon_size=35,
+        tooltip="change theme",
+        on_click=change_theme,
+        style=ft.ButtonStyle(color={"": ft.colors.BLACK, "selected": ft.colors.WHITE}),
+    )
+
+    page.appbar = ft.AppBar(
+        title=ft.Text(
+            "URL Shortener",
+            color="white"
+        ),
+        center_title=True,
+        bgcolor="blue",
+        actions=[theme_icon_button],
+        leading=ft.IconButton(
+            icon=ft.icons.CODE,
+            icon_color=ft.colors.YELLOW_ACCENT,
+            tooltip="View Code",
+            on_click=lambda e: page.launch_url(
+                "https://github.com/ndonkoHenri/Flet-Samples/tree/master/URL%20shortener")
+        )
+    )
+
+    page.add(
+        text_field := ft.TextField(
+            value='https://github.com/ndonkoHenri/codespaces-jupyter',  # a test link
+            label="Long URL",
+            hint_text="type long url here",
+            max_length=200,
+            width=800,
+            keyboard_type=ft.KeyboardType.URL,
+            # 'shorten' is the function to be called on occurrence of some events
+            suffix=ft.FilledButton("Shorten!", on_click=shorten),  # event: button clicked
+            on_submit=shorten  # event: 'enter' key pressed
+        ),
+        ft.Text("Generated URLs:", weight=ft.FontWeight.BOLD, size=23, font_family="sf-bold")
+    )
+
+
+ft.app(target=main, assets_dir="assets", view=ft.WEB_BROWSER)
 
